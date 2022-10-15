@@ -8,7 +8,6 @@ contract DiamondProxy is Ownable {
         address facetAddress;
         bytes4[] functionSelectors;
     }
-    string public _name = "ehe";
     Facet[] facets;
     mapping(bytes4 => address) selectorTofacet;
 

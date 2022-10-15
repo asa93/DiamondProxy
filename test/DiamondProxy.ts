@@ -17,7 +17,6 @@ describe("DiamondProxy", function () {
     const Token = await ethers.getContractFactory("Token");
     const token = await Token.deploy();
 
-    console.log("");
     return { Token, token, diamondProxy, owner, otherAccount };
   }
 
@@ -32,7 +31,10 @@ describe("DiamondProxy", function () {
       const new_facet = await diamondProxy.facet(0);
       await expect(new_facet.facetAddress).to.equal(token.address);
 
-      const sigHash = await token.interface.getSighash("name");
+      let sigHash = await token.interface.getSighash("name");
+      await diamondProxy.addSelector(sigHash, token.address);
+
+      sigHash = await token.interface.getSighash("__Token_init");
       await diamondProxy.addSelector(sigHash, token.address);
 
       //call proxy
@@ -40,7 +42,7 @@ describe("DiamondProxy", function () {
         "Token",
         diamondProxy.address
       );
-
+      await tokenViaProxy.__Token_init();
       console.log("name", await tokenViaProxy.name());
     });
     //it("Should fail to delegate if selector has not been added ", async function () {});
