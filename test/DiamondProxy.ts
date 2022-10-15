@@ -21,8 +21,20 @@ describe("DiamondProxy", function () {
   }
 
   describe("Deployment", function () {
+    it("Shouldn't add facet if caller is not owner ", async function () {
+      const { diamondProxy, token, otherAccount } = await loadFixture(
+        deployFixture
+      );
+
+      await expect(
+        diamondProxy.connect(otherAccount).addFacet({
+          facetAddress: token.address,
+          functionSelectors: [],
+        })
+      ).to.be.reverted;
+    });
     it("Should add facet ", async function () {
-      const { diamondProxy, token, Token } = await loadFixture(deployFixture);
+      const { diamondProxy, token } = await loadFixture(deployFixture);
 
       diamondProxy.addFacet({
         facetAddress: token.address,
@@ -43,8 +55,7 @@ describe("DiamondProxy", function () {
         diamondProxy.address
       );
       await tokenViaProxy.__Token_init();
-      console.log("name", await tokenViaProxy.name());
+      await expect(await tokenViaProxy.name()).to.equal("Gold");
     });
-    //it("Should fail to delegate if selector has not been added ", async function () {});
   });
 });
