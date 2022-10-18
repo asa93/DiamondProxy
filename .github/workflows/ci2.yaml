@@ -6,7 +6,7 @@ on:
       - "workflow"
 
 jobs:
-  environment: staging_environment
+  environment: dev
   docker:
     runs-on: ubuntu-latest
     steps:
