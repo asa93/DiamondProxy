@@ -3,7 +3,7 @@ name: ci2
 on:
   push:
     branches:
-      - "main"
+      - "workflow"
 
 jobs:
   docker:
