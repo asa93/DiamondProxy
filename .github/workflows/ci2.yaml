@@ -1,4 +1,4 @@
-name: ci2
+name: docker
 
 on:
   push:
@@ -6,6 +6,7 @@ on:
       - "workflow"
 
 jobs:
+  environment: staging_environment
   docker:
     runs-on: ubuntu-latest
     steps:
