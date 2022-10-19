@@ -1,7 +1,7 @@
 FROM node:lts-alpine
 #ENV NODE_ENV=production
-WORKDIR /home/asa93/hardhat_example
-ADD . /home/asa93/hardhat_example
+WORKDIR /home/runner/work/DiamondProxy
+ADD . ./
 #COPY ["package.json", "package-lock.json*", "npm-shrinkwrap.json*", "./"]
 RUN npm install --production --silent && mv node_modules ../
 #COPY . .
